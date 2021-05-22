@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+##Описание
+Страница, на ней две кнопки: "Собеседование" и "Справочник".
+Если жмем собеседование, открывается попап с фильтрами (настройками): кол-во вопросов(инпут тип number), типы тасков(ползунок), сложность (селект), компетенции (список с чекбоксами).
+Открывается страница: в хэдере отображаются выбранные фильтры + кнопка, в боди раскрывающаяся таблица.
+## Стек
+Frontend: TS, Angular 12
+backend: nodejs, py, go
+БД: JSON -> nodejs+mongodb || firebase || sql
+
+## Сущности
+Вопрос
+
+## Логика генерации
+20% -ступени, 20% +ступени, 80% выбранной ступени
