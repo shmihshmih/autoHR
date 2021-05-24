@@ -1,0 +1,82 @@
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+  <div>
+    <div>
+      <mat-form-field class="example-form-field">
+        <mat-label>Кол-во вопросов</mat-label>
+        <input type="number" matInput [(ngModel)]="tasksCount">
+        <button mat-button *ngIf="tasksCount" matSuffix mat-icon-button aria-label="Clear" (click)="tasksCount=0">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <div>
+      Типы тасков (вопросы\задачи)
+    </div>
+    <div>
+      <mat-slider [(ngModel)]="typeModel" aria-label="unit(s)"></mat-slider>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <div>Сложность</div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>difficulties</mat-label>
+        <mat-select [formControl]="difficultiesControl" multiple>
+          <mat-select-trigger>
+            {{difficultiesControl.value ? difficultiesControl.value[0] : ''}}
+            <span *ngIf="difficultiesControl.value?.length > 1" class="example-additional-selection">
+        (+{{difficultiesControl.value.length - 1}} {{difficultiesControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let difficultie of data.difficultiesList"
+                      [value]="difficultie">{{difficultie}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <div>Компетенции</div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>competence</mat-label>
+        <mat-select [formControl]="competencesControl" multiple>
+          <mat-select-trigger>
+            {{competencesControl.value ? competencesControl.value[0] : ''}}
+            <span *ngIf="competencesControl.value?.length > 1" class="example-additional-selection">
+        (+{{competencesControl.value.length - 1}} {{competencesControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let competence of data.competencesList" [value]="competence">{{competence}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <div>Популярность</div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>popularity</mat-label>
+        <mat-select [formControl]="popularityControl" multiple>
+          <mat-select-trigger>
+            {{popularityControl.value ? popularityControl.value[0] : ''}}
+            <span *ngIf="popularityControl.value?.length > 1" class="example-additional-selection">
+        (+{{popularityControl.value.length - 1}} {{popularityControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let popularity of data.popularityList" [value]="popularity">{{popularity}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick(false)">Отмена</button>
+  <button mat-button cdkFocusInitial (click)="onNoClick(true)">Начать</button>
+</div>

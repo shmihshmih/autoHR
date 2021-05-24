@@ -1,1 +1,68 @@
-<div>It works</div>
+<div class="content">
+
+  <div *ngIf="step === 'start'" class="start-actions">
+    <button mat-stroked-button (click)="openInterviewPopup()">Собес</button>
+    <button mat-stroked-button (click)="step = 'catalog'">Справочник</button>
+  </div>
+
+  <div *ngIf="(step === 'catalog') || (step === 'interview')" class="catalog">
+
+    <table mat-table
+           [dataSource]="dataSource" multiTemplateDataRows
+           class="mat-elevation-z8">
+      <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No.</th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- question Column -->
+      <ng-container matColumnDef="question">
+        <th mat-header-cell *matHeaderCellDef> Question</th>
+        <td mat-cell *matCellDef="let element"> {{element.question}} </td>
+      </ng-container>
+
+      <!-- type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Type</th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+
+      <!-- difficulty Column -->
+      <ng-container matColumnDef="difficulty">
+        <th mat-header-cell *matHeaderCellDef> Difficulty</th>
+        <td mat-cell *matCellDef="let element"> {{element.difficulty}} </td>
+      </ng-container>
+
+      <!-- popularity Column -->
+      <ng-container matColumnDef="popularity">
+        <th mat-header-cell *matHeaderCellDef> Popularity</th>
+        <td mat-cell *matCellDef="let element"> {{element.popularity}} </td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+          <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="example-element-diagram">
+              <div> {{element.answer.link}} </div>
+              <div> {{element.answer.text}} </div>
+              <div> {{element.prevDifficulty}} </div>
+              <div> {{element.nextDifficulty}} </div>
+              <div> {{element.competence}} </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+
+  </div>
+
+</div>

@@ -1,19 +1,46 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppComponent} from './app.component';
 import {ApiService} from "./core/api.service";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from "@angular/material/button";
+import {InterviewPopupComponent} from './interview-popup/interview-popup.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
+import {MatSelectModule} from "@angular/material/select";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatSliderModule} from '@angular/material/slider';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatPaginatorModule} from "@angular/material/paginator";
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InterviewPopupComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatTableModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatSliderModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatPaginatorModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
