@@ -17,12 +17,15 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {TaskAnswerPopupComponent} from './task-answer-popup/task-answer-popup.component';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    InterviewPopupComponent
+    InterviewPopupComponent,
+    TaskAnswerPopupComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatSliderModule,
     MatIconModule,
     FlexLayoutModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatChipsModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

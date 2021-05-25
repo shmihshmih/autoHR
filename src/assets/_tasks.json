@@ -11,7 +11,7 @@
   },
   "type": "question",
   "difficulty": "junior",
-  "competence": ["javascript"],
+  "competence": ["javascript", "html"],
   "popularity": null
 }, {
   "id": 3,
@@ -27,7 +27,7 @@
   "type": "question",
   "difficulty": "junior",
   "competence": ["javascript"],
-  "popularity": null
+  "popularity": "5"
 }, {
   "id": 5,
   "question": "Расскажите,\n  как работает прототипное наследование",

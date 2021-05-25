@@ -1,0 +1,64 @@
+<div *ngIf="data.task.question">
+  <div>
+    <h2 class="custom-h-margin">
+      Вопрос:
+    </h2>
+  </div>
+  <div>
+    {{data.task.question}}
+  </div>
+  <hr>
+</div>
+
+<div *ngIf="data.task.description">
+  <div>
+    <h2 class="custom-h-margin">
+      Описание:
+    </h2>
+  </div>
+  <div>
+    {{data.task.description}}
+  </div>
+  <hr>
+</div>
+
+<div *ngIf="data.task.answer.text">
+  <div>
+    <h2 class="custom-h-margin">
+      Ответ:
+    </h2>
+  </div>
+  <div>
+    {{data.task.answer.text}}
+  </div>
+  <hr>
+</div>
+
+<div *ngIf="data.task.answer.code && data.task.answer.code.length > 0">
+  <div>
+    <h3 class="custom-h-margin">
+      Код:
+    </h3>
+  </div>
+  <div *ngFor="let code of data.task.answer.code">
+    {{code}}
+  </div>
+  <hr>
+</div>
+
+<div *ngIf="data.task.answer.link && data.task.answer.link.length > 0">
+  <div>
+    <h3 class="custom-h-margin">
+      Ссылки:
+    </h3>
+  </div>
+  <div *ngFor="let link of data.task.answer.link">
+    <a target="_blank" href="{{link}}">{{link}}</a>
+  </div>
+  <hr>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary"  (click)="onNoClick(false)">Отмена</button>
+  <button mat-raised-button color="primary" cdkFocusInitial (click)="onNoClick(true)">Закрыть</button>
+</div>

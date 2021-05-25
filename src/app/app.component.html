@@ -7,37 +7,53 @@
 
   <div *ngIf="(step === 'catalog') || (step === 'interview')" class="catalog">
 
+    <div class="catalog-action">
+      <button mat-mini-fab color="primary" (click)="step = 'start'">
+        <mat-icon>highlight_off</mat-icon>
+      </button>
+    </div>
+
     <table mat-table
            [dataSource]="dataSource" multiTemplateDataRows
-           class="mat-elevation-z8">
+           class="mat-elevation-z8 catalog-table">
       <!-- Id Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> No.</th>
+        <th mat-header-cell *matHeaderCellDef> №</th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
       </ng-container>
 
       <!-- question Column -->
       <ng-container matColumnDef="question">
-        <th mat-header-cell *matHeaderCellDef> Question</th>
+        <th mat-header-cell *matHeaderCellDef> Вопрос</th>
         <td mat-cell *matCellDef="let element"> {{element.question}} </td>
       </ng-container>
 
       <!-- type Column -->
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> Type</th>
-        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        <th mat-header-cell *matHeaderCellDef> Тип</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.type === 'question'">Вопрос</span>
+          <span *ngIf="element.type === 'exercise'">Задача</span>
+        </td>
       </ng-container>
 
       <!-- difficulty Column -->
       <ng-container matColumnDef="difficulty">
-        <th mat-header-cell *matHeaderCellDef> Difficulty</th>
-        <td mat-cell *matCellDef="let element"> {{element.difficulty}} </td>
+        <th mat-header-cell *matHeaderCellDef> Сложность</th>
+        <td mat-cell *matCellDef="let element">
+          <span [ngSwitch]="element.difficulty">
+            <span *ngSwitchCase="'beginner'">Пре-Джуниор</span>
+            <span *ngSwitchCase="'junior'">Джуниор</span>
+            <span *ngSwitchCase="'middle'">Мидл</span>
+            <span *ngSwitchCase="'senior'">Сеньор</span>
+          </span>
+        </td>
       </ng-container>
 
       <!-- popularity Column -->
       <ng-container matColumnDef="popularity">
-        <th mat-header-cell *matHeaderCellDef> Popularity</th>
-        <td mat-cell *matCellDef="let element"> {{element.popularity}} </td>
+        <th mat-header-cell *matHeaderCellDef> Популярность</th>
+        <td mat-cell *matCellDef="let element"><span *ngIf="element.popularity">{{element.popularity}} / 5</span></td>
       </ng-container>
 
       <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -45,11 +61,33 @@
         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-diagram">
-              <div> {{element.answer.link}} </div>
-              <div> {{element.answer.text}} </div>
-              <div> {{element.prevDifficulty}} </div>
-              <div> {{element.nextDifficulty}} </div>
-              <div> {{element.competence}} </div>
+
+              <div [ngStyle]="{'display': 'flex', 'justify-content': 'flex-end'}" class="custom-h-margin"
+                   *ngIf="element.competence && element.competence.length > 0">
+                <mat-chip-list>
+                  <mat-chip color="primary" *ngFor="let competence of element.competence">{{competence}}</mat-chip>
+                </mat-chip-list>
+              </div>
+
+              <div *ngIf="element.description || element.question">
+                <h2 class="custom-h-margin">
+                  Описание вопроса:
+                </h2>
+                <div>
+                  <div> {{element.description || element.question}} </div>
+                </div>
+              </div>
+
+              <div class="detail-actions">
+                <div>
+                  <button *ngIf="element.prevDifficulty" mat-raised-button color="primary"><< Предыдущий по
+                    сложности {{element.prevDifficulty}}</button>
+                  <button *ngIf="element.nextDifficulty" mat-raised-button color="primary">Следующий по сложности
+                    >>{{element.nextDifficulty}}</button>
+                </div>
+                <button mat-raised-button color="primary" (click)="openTaskAnswerPopup(element)">Ответ</button>
+              </div>
+
             </div>
           </div>
         </td>

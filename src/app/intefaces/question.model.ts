@@ -7,6 +7,7 @@ export interface ITask {
   answer: {
     link?: string[]; // ссылка на ресурс
     text?: string; // самописный ответ + код для задач
+    code?: string[]; // код
     wrong?: string[]; // неправильные ответы на вопрос для заданий с селектом
   };
   type: 'question' | 'exercise';

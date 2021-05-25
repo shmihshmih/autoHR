@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl} from "@angular/forms";
+import {ISobesConfigModel} from "../intefaces/sobesConfig.model";
 
 @Component({
   selector: 'app-interview-popup',
@@ -16,13 +17,7 @@ export class InterviewPopupComponent implements OnInit {
   tasksCount = 0;
   typeModel = 0;
 
-  config: {
-    count?: number;
-    type?: number;
-    difficulty?: string[],
-    competence?: string[],
-    popularity?: string[]
-  } = {};
+  config: ISobesConfigModel | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<InterviewPopupComponent>,

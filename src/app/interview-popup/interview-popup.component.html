@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Hi</h1>
+<h1 mat-dialog-title>Состав вопросов:</h1>
 <div mat-dialog-content>
   <div>
     <div>
@@ -22,10 +22,10 @@
   </div>
   <hr>
   <div>
-    <div>Сложность</div>
+    <!--    <div></div>-->
     <div>
       <mat-form-field appearance="fill">
-        <mat-label>difficulties</mat-label>
+        <mat-label>Сложность</mat-label>
         <mat-select [formControl]="difficultiesControl" multiple>
           <mat-select-trigger>
             {{difficultiesControl.value ? difficultiesControl.value[0] : ''}}
@@ -34,17 +34,24 @@
       </span>
           </mat-select-trigger>
           <mat-option *ngFor="let difficultie of data.difficultiesList"
-                      [value]="difficultie">{{difficultie}}</mat-option>
+                      [value]="difficultie">
+                      <span [ngSwitch]="difficultie">
+                        <span *ngSwitchCase="'beginner'">Пре-Джуниор</span>
+                        <span *ngSwitchCase="'junior'">Джуниор</span>
+                        <span *ngSwitchCase="'middle'">Мидл</span>
+                        <span *ngSwitchCase="'senior'">Сеньор</span>
+                      </span>
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
   <hr>
   <div>
-    <div>Компетенции</div>
+    <!--    <div>Компетенции</div>-->
     <div>
       <mat-form-field appearance="fill">
-        <mat-label>competence</mat-label>
+        <mat-label>Компетенции</mat-label>
         <mat-select [formControl]="competencesControl" multiple>
           <mat-select-trigger>
             {{competencesControl.value ? competencesControl.value[0] : ''}}
@@ -52,17 +59,19 @@
         (+{{competencesControl.value.length - 1}} {{competencesControl.value?.length === 2 ? 'other' : 'others'}})
       </span>
           </mat-select-trigger>
-          <mat-option *ngFor="let competence of data.competencesList" [value]="competence">{{competence}}</mat-option>
+          <mat-option *ngFor="let competence of data.competencesList" [value]="competence">
+            {{competence}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
   <hr>
   <div>
-    <div>Популярность</div>
+    <!--    <div>Популярность</div>-->
     <div>
       <mat-form-field appearance="fill">
-        <mat-label>popularity</mat-label>
+        <mat-label>Популярность</mat-label>
         <mat-select [formControl]="popularityControl" multiple>
           <mat-select-trigger>
             {{popularityControl.value ? popularityControl.value[0] : ''}}

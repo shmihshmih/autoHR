@@ -4,6 +4,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {InterviewPopupComponent} from "./interview-popup/interview-popup.component";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ITask} from "./intefaces/question.model";
+import {ISobesConfigModel} from "./intefaces/sobesConfig.model";
+import {TaskAnswerPopupComponent} from "./task-answer-popup/task-answer-popup.component";
 
 @Component({
   selector: 'app-root',
@@ -70,14 +72,28 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 
-  setTableData(config: any): void {
+  openTaskAnswerPopup(task: ITask): void {
+    const dialogRef = this.dialog.open(TaskAnswerPopupComponent, {
+      data: {task}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      console.log('data: ', data);
+    });
+  }
+
+  setTableData(config: ISobesConfigModel): void {
     const newDataSource: ITask[] = [];
-    this.dataSource.forEach(task => {
-      if (config.difficulty.include(task.difficulty) | config.competence.include(...task.competence) | config.popularity.include(task.popularity)) {
+    this.dataSource.forEach((task: ITask) => {
+      let taskChecker = (task: ITask, config: ISobesConfigModel) => {
+        return task.competence.every(v => config.competence.includes(v));
+      };
+      if (config.difficulty.includes(task.difficulty) && config.popularity.includes(task.popularity) && taskChecker(task, config)) {
         newDataSource.push(task);
       }
     });
     this.dataSource = newDataSource;
   }
+
 }
 
