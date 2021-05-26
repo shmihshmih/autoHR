@@ -1,25 +1,93 @@
 <div class="content">
-
   <div *ngIf="step === 'start'" class="start-actions">
     <button mat-stroked-button (click)="openInterviewPopup()">Собес</button>
     <button mat-stroked-button (click)="step = 'catalog'">Справочник</button>
   </div>
-
   <div *ngIf="(step === 'catalog') || (step === 'interview')" class="catalog">
-
     <div class="catalog-action">
-      <button mat-mini-fab color="primary" (click)="step = 'start'">
-        <mat-icon>highlight_off</mat-icon>
-      </button>
-    </div>
+      <div [ngStyle]="{'display': 'flex'}">
 
+        <mat-form-field class="example-form-field p-lr-8" [ngStyle]="{'width': '20%'}">
+          <mat-label>Кол-во вопросов</mat-label>
+          <input type="number" matInput [(ngModel)]="tasksCount">
+          <button mat-button *ngIf="tasksCount" matSuffix mat-icon-button aria-label="Clear" (click)="tasksCount=0">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div [ngStyle]="{'width': '20%'}" class="p-lr-8">
+          <div>
+            <mat-slider [(ngModel)]="typeModel" aria-label="unit(s)" [ngStyle]="{'width': '100%'}"></mat-slider>
+          </div>
+        </div>
+
+        <mat-form-field appearance="fill" [ngStyle]="{'width': '20%'}" class="p-lr-8">
+          <mat-label>Сложность</mat-label>
+          <mat-select [formControl]="difficultiesControl" multiple>
+            <mat-select-trigger>
+              {{difficultiesControl.value ? difficultiesControl.value[0] : ''}}
+              <span *ngIf="difficultiesControl.value?.length > 1" class="example-additional-selection">
+        (+{{difficultiesControl.value.length - 1}} {{difficultiesControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let difficultie of difficultiesList"
+                        [value]="difficultie">
+                      <span [ngSwitch]="difficultie">
+                        <span *ngSwitchCase="'beginner'">Пре-Джуниор</span>
+                        <span *ngSwitchCase="'junior'">Джуниор</span>
+                        <span *ngSwitchCase="'middle'">Мидл</span>
+                        <span *ngSwitchCase="'senior'">Сеньор</span>
+                      </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" [ngStyle]="{'width': '20%'}" class="p-lr-8">
+          <mat-label>Компетенции</mat-label>
+          <mat-select [formControl]="competencesControl" multiple>
+            <mat-select-trigger>
+              {{competencesControl.value ? competencesControl.value[0] : ''}}
+              <span *ngIf="competencesControl.value?.length > 1" class="example-additional-selection">
+        (+{{competencesControl.value.length - 1}} {{competencesControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let competence of competencesList" [value]="competence">
+              {{competence}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" [ngStyle]="{'width': '20%'}" class="p-lr-8">
+          <mat-label>Популярность</mat-label>
+          <mat-select [formControl]="popularityControl" multiple>
+            <mat-select-trigger>
+              {{popularityControl.value ? popularityControl.value[0] : ''}}
+              <span *ngIf="popularityControl.value?.length > 1" class="example-additional-selection">
+        (+{{popularityControl.value.length - 1}} {{popularityControl.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let popularity of popularityList" [value]="popularity">{{popularity}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div class="filter-actions">
+        <button mat-mini-fab color="primary" (click)="refreshTable()"
+                [disabled]="tasksCount < 1 || typeModel < 1 || !difficultiesControl.value || !competencesControl.value || !popularityControl.value">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" (click)="goToStart()">
+          <mat-icon>highlight_off</mat-icon>
+        </button>
+      </div>
+    </div>
     <table mat-table
            [dataSource]="dataSource" multiTemplateDataRows
            class="mat-elevation-z8 catalog-table">
       <!-- Id Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> №</th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element; let ik = dataIndex;"> {{ik + 1}}</td>
       </ng-container>
 
       <!-- question Column -->
@@ -56,23 +124,23 @@
         <td mat-cell *matCellDef="let element"><span *ngIf="element.popularity">{{element.popularity}} / 5</span></td>
       </ng-container>
 
-      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <!-- Expanded Content Column  -->
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div class="example-element-diagram">
 
-              <div [ngStyle]="{'display': 'flex', 'justify-content': 'flex-end'}" class="custom-h-margin"
+              <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between'}" class="custom-h-margin"
                    *ngIf="element.competence && element.competence.length > 0">
+                <h2 class="custom-h-margin">
+                  Описание вопроса:
+                </h2>
                 <mat-chip-list>
                   <mat-chip color="primary" *ngFor="let competence of element.competence">{{competence}}</mat-chip>
                 </mat-chip-list>
               </div>
 
               <div *ngIf="element.description || element.question">
-                <h2 class="custom-h-margin">
-                  Описание вопроса:
-                </h2>
                 <div>
                   <div> {{element.description || element.question}} </div>
                 </div>
@@ -100,7 +168,5 @@
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
-
   </div>
-
 </div>

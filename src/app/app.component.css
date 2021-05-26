@@ -70,27 +70,41 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .mat-column-id {
   padding: 16px !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .mat-column-question {
-
+  padding: 16px !important;
 }
 
 .mat-column-type {
   padding: 16px !important;
-
 }
 
 .mat-column-difficulty {
-
+  padding: 16px !important;
 }
 
 .mat-column-popularity {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 16px !important;
+}
+
+.catalog-action {
+  display: flex;
+  align-items: baseline;
+  flex-direction: column;
+}
+
+.filter-actions {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.filter-actions > button {
+  margin: 0 8px;
+}
+
+.p-lr-8 {
+  padding: 0 8px;
+  box-sizing: border-box;
 }
