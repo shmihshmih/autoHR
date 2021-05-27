@@ -186,8 +186,11 @@ export class AppComponent implements OnInit {
     return arr.splice(itemNum, 1)[0];
   }
 
-  goToStart(): void {
-    this.step = 'start';
+  /**
+   *
+   * @param type: 'reset-filters' | 'close-block'
+   */
+  goToStart(type: string): void {
     this.config = {
       count: 0,
       type: 0,
@@ -202,6 +205,10 @@ export class AppComponent implements OnInit {
     this.popularityControl.reset()
     this.tasksCount = 0;
     this.typeModel = 0;
+
+    if (type === 'close-block') {
+      this.step = 'start';
+    }
   }
 }
 

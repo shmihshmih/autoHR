@@ -2,7 +2,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
 }
 
 .start-actions {
@@ -13,10 +14,7 @@
 .catalog {
   height: 100%;
   display: flex;
-  overflow: auto;
   flex-direction: column;
-  width: 80%;
-  padding: 24px;
 }
 
 .catalog-table {
@@ -91,13 +89,10 @@ tr.example-element-row:not(.example-expanded-row):active {
 .catalog-action {
   display: flex;
   align-items: baseline;
-  flex-direction: column;
 }
 
 .filter-actions {
   display: flex;
-  width: 100%;
-  justify-content: center;
 }
 
 .filter-actions > button {
@@ -107,4 +102,11 @@ tr.example-element-row:not(.example-expanded-row):active {
 .p-lr-8 {
   padding: 0 8px;
   box-sizing: border-box;
+}
+
+.block-action {
+  width: 80px;
+  display: flex;
+  height: 100%;
+  justify-content: flex-end;
 }

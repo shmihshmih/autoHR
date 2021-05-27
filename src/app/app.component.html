@@ -76,7 +76,7 @@
                 [disabled]="tasksCount < 1 || typeModel < 1 || !difficultiesControl.value || !competencesControl.value || !popularityControl.value">
           <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-mini-fab color="primary" (click)="goToStart()">
+        <button mat-mini-fab color="primary" (click)="goToStart('reset-filters')">
           <mat-icon>highlight_off</mat-icon>
         </button>
       </div>
@@ -168,5 +168,10 @@
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
+  </div>
+  <div *ngIf="(step === 'catalog') || (step === 'interview')" class="block-action">
+    <button mat-mini-fab color="accent" (click)="goToStart('close-block')">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 </div>
