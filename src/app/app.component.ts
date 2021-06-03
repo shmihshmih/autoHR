@@ -7,6 +7,7 @@ import {ITask} from "./intefaces/question.model";
 import {ISobesConfigModel} from "./intefaces/sobesConfig.model";
 import {TaskAnswerPopupComponent} from "./task-answer-popup/task-answer-popup.component";
 import {FormControl} from "@angular/forms";
+import {ModTaskPopupComponent} from "./mod-task-popup/mod-task-popup.component";
 
 @Component({
   selector: 'app-root',
@@ -89,6 +90,16 @@ export class AppComponent implements OnInit {
 
   openTaskAnswerPopup(task: ITask): void {
     const dialogRef = this.dialog.open(TaskAnswerPopupComponent, {
+      data: {task}
+    });
+    dialogRef.afterClosed().subscribe(data => {
+      console.log('data: ', data);
+    });
+  }
+
+  openModTaskPopup(task: ITask): void {
+    console.log('task: ', task);
+    const dialogRef = this.dialog.open(ModTaskPopupComponent, {
       data: {task}
     });
     dialogRef.afterClosed().subscribe(data => {
@@ -209,6 +220,14 @@ export class AppComponent implements OnInit {
     if (type === 'close-block') {
       this.step = 'start';
     }
+  }
+
+  removeTask(task: ITask): void {
+    const isRemove = confirm('Удалить вопрос?');
+    if (!isRemove) return;
+    this.dataSource = this.dataSource.filter((item: ITask) => {
+      return item.id !== task.id;
+    });
   }
 }
 

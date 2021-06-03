@@ -1,0 +1,110 @@
+<div class="mod-task">
+  <div [formGroup]="taskForm">
+
+    <mat-form-field>
+      <mat-label>Вопрос</mat-label>
+      <textarea formControlName="question" matInput placeholder="Вопрос"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Описание</mat-label>
+      <textarea formControlName="description" matInput placeholder="Описание"></textarea>
+    </mat-form-field>
+
+    <div>
+      <div formArrayName="prevDifficulty">
+        <mat-form-field *ngFor="let prev of prevDifficultyList.controls; let i=index">
+          <mat-label>Предущий вопрос</mat-label>
+          <input matInput [formControlName]="i" placeholder="" value="{{prev}}">
+        </mat-form-field>
+        <button (click)="addControl('prevDifficulty')">add prev</button>
+      </div>
+    </div>
+
+    <div>
+      <div formArrayName="nextDifficulty">
+        <mat-form-field *ngFor="let next of nextDifficultyList.controls; let i=index">
+          <mat-label>Предущий вопрос</mat-label>
+          <input matInput [formControlName]="i" placeholder="" value="{{next}}">
+        </mat-form-field>
+        <button (click)="addControl('nextDifficulty')">add next</button>
+      </div>
+    </div>
+
+    <div>
+      <div formGroupName="answer">
+
+        <div formArrayName="link">
+          <mat-form-field *ngFor="let link of linkList.controls; let i=index">
+            <mat-label>Ссылка</mat-label>
+            <input matInput [formControlName]="i" placeholder="" value="{{link}}">
+          </mat-form-field>
+          <button (click)="addControl('link')">add link</button>
+        </div>
+
+        <div formArrayName="text">
+          <mat-form-field *ngFor="let text of textList.controls; let i=index">
+            <mat-label>Текст</mat-label>
+            <input matInput [formControlName]="i" placeholder="" value="{{text}}">
+          </mat-form-field>
+          <button (click)="addControl('text')">add text</button>
+        </div>
+
+        <div formArrayName="code">
+          <mat-form-field *ngFor="let code of codeList.controls; let i=index">
+            <mat-label>code</mat-label>
+            <input matInput [formControlName]="i" placeholder="" value="{{code}}">
+          </mat-form-field>
+          <button (click)="addControl('code')">add text</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Favorite food</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Favorite food</mat-label>
+        <mat-select formControlName="difficulty">
+          <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">
+            {{difficulty}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div formArrayName="competence">
+      <mat-form-field *ngFor="let competence of competenceList.controls; let i=index">
+        <mat-label>competence</mat-label>
+        <input matInput [formControlName]="i" placeholder="" value="{{competence}}">
+      </mat-form-field>
+      <button (click)="addControl('competence')">add text</button>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>popularity</mat-label>
+        <mat-select formControlName="popularity">
+          <mat-option *ngFor="let popularity of popularities" [value]="popularity">
+            {{popularity}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button (click)="submit()">submit</button>
+    </div>
+
+  </div>
+</div>

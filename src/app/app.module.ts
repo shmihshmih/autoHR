@@ -19,13 +19,15 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {TaskAnswerPopupComponent} from './task-answer-popup/task-answer-popup.component';
 import {MatChipsModule} from '@angular/material/chips';
+import {ModTaskPopupComponent} from './mod-task-popup/mod-task-popup.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     InterviewPopupComponent,
-    TaskAnswerPopupComponent
+    TaskAnswerPopupComponent,
+    ModTaskPopupComponent
   ],
   imports: [
     CommonModule,

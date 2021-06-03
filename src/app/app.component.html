@@ -133,16 +133,35 @@
               <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between'}" class="custom-h-margin"
                    *ngIf="element.competence && element.competence.length > 0">
                 <h2 class="custom-h-margin">
-                  Описание вопроса:
+                  Вопрос:
                 </h2>
                 <mat-chip-list>
                   <mat-chip color="primary" *ngFor="let competence of element.competence">{{competence}}</mat-chip>
                 </mat-chip-list>
+                <div>
+                  <button mat-icon-button color="primary" (click)="openModTaskPopup(element)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="removeTask(element)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+                </div>
               </div>
 
-              <div *ngIf="element.description || element.question">
+              <div *ngIf="element.question">
                 <div>
-                  <div> {{element.description || element.question}} </div>
+                  <div> {{element.question}} </div>
+                </div>
+              </div>
+
+              <div [ngStyle]="{'margin-top': '16px'}">
+                <h2 class="custom-h-margin">
+                  Описание вопроса:
+                </h2>
+                <div *ngIf="element.description || element.question">
+                  <div>
+                    <div> {{element.description || element.question}} </div>
+                  </div>
                 </div>
               </div>
 
