@@ -17,7 +17,7 @@ export class InterviewPopupComponent implements OnInit {
   tasksCount = 0;
   typeModel = 0;
 
-  config: ISobesConfigModel | undefined;
+  config: ISobesConfigModel;
 
   constructor(
     public dialogRef: MatDialogRef<InterviewPopupComponent>,

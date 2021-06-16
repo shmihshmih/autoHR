@@ -20,6 +20,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {TaskAnswerPopupComponent} from './task-answer-popup/task-answer-popup.component';
 import {MatChipsModule} from '@angular/material/chips';
 import {ModTaskPopupComponent} from './mod-task-popup/mod-task-popup.component';
+import {MatSortModule} from "@angular/material/sort";
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {ModTaskPopupComponent} from './mod-task-popup/mod-task-popup.component';
     MatIconModule,
     FlexLayoutModule,
     MatPaginatorModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSortModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

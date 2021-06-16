@@ -1,6 +1,7 @@
 export interface ITask {
-  id: number;
-  question: string;
+  id: string; // систменый id
+  tableIndex?: number; // используется в таблицах
+  question: string; // основная часть вопроса
   description: string; // описание задачи\вопроса
   prevDifficulty?: number[]; // вопрос по теме, но полегче
   nextDifficulty?: number[]; // вопрос по теме, но потруднее

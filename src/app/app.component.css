@@ -110,3 +110,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   height: 100%;
   justify-content: flex-end;
 }
+
+.w-100 {
+  width: 100%;
+}
