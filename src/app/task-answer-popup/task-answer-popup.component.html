@@ -22,35 +22,37 @@
   <hr>
 </div>
 
-<div *ngIf="data.task.answer.text">
+<div *ngIf="data.task.answer.text.length > 0">
   <div>
     <h2 class="custom-h-margin">
       Ответ:
     </h2>
   </div>
-  <div>
-    {{data.task.answer.text}}
+  <div *ngFor="let text of data.task.answer.text" class="paragraph">
+    {{text}}
   </div>
   <hr>
 </div>
 
-<div *ngIf="data.task.answer.code && data.task.answer.code.length > 0">
+<div *ngIf="data.task.answer.code.length > 0">
   <div>
-    <h3 class="custom-h-margin">
+    <h2 class="custom-h-margin">
       Код:
-    </h3>
+    </h2>
   </div>
-  <div *ngFor="let code of data.task.answer.code">
-    {{code}}
-  </div>
+  <pre *ngFor="let code of data.task.answer.code" class="paragraph">
+    <code data-language="javascript">
+      {{code}}
+    </code>
+  </pre>
   <hr>
 </div>
 
 <div *ngIf="data.task.answer.link && data.task.answer.link.length > 0">
   <div>
-    <h3 class="custom-h-margin">
+    <h2 class="custom-h-margin">
       Ссылки:
-    </h3>
+    </h2>
   </div>
   <div *ngFor="let link of data.task.answer.link">
     <a target="_blank" href="{{link}}">{{link}}</a>

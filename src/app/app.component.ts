@@ -106,6 +106,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   // попап с ответом
   openTaskAnswerPopup(task: ITask): void {
     const dialogRef = this.dialog.open(TaskAnswerPopupComponent, {
+      maxHeight: '90vh',
+      width: '90%',
       data: {task}
     });
     dialogRef.afterClosed().subscribe(data => {
@@ -115,12 +117,23 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   // попап редактирования таска
   openModTaskPopup(task: ITask): void {
-    console.log('task: ', task);
     const dialogRef = this.dialog.open(ModTaskPopupComponent, {
+      maxHeight: '90vh',
+      width: '90%',
       data: {task}
     });
     dialogRef.afterClosed().subscribe(data => {
-      console.log('data: ', data);
+      if (data.id) {
+        // update
+        this.tasks[data.tableIndex - 1] = data;
+        let tableDataSrc = this.setTableIndex(0, this.tasks);
+        this.dataSource = new MatTableDataSource(tableDataSrc);
+      } else {
+        // create
+        this.tasks.push(data);
+        let tableDataSrc = this.setTableIndex(0, this.tasks);
+        this.dataSource = new MatTableDataSource(tableDataSrc);
+      }
     });
   }
 

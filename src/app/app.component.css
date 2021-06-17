@@ -112,5 +112,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .w-100 {
-  width: 100%;
+  width: 100% !important;
+}
+
+.mb-24 {
+  margin-bottom: 24px;
 }

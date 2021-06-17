@@ -1,3 +1,24 @@
 .mod-task {
 
 }
+.mod-task-form {
+  border-bottom: 1px solid grey;
+  margin-bottom: 24px;
+}
+.mod-task-actions {
+
+}
+.big-parts {
+  width: 70%;
+  padding-right: 24px;
+}
+
+.small-parts {
+  width: 20%;
+  border-left: 1px solid grey;
+  padding-left: 24px;
+}
+
+.mb-24 {
+  margin-bottom: 24px;
+}
