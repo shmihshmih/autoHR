@@ -16,15 +16,10 @@ export class TaskAnswerPopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('data: ', this.data);
   }
 
-  onNoClick(isStart: boolean): void {
-    if (isStart) {
-      this.dialogRef.close('this.config');
-    } else {
-      this.dialogRef.close();
-    }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

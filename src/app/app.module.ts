@@ -21,7 +21,8 @@ import {TaskAnswerPopupComponent} from './task-answer-popup/task-answer-popup.co
 import {MatChipsModule} from '@angular/material/chips';
 import {ModTaskPopupComponent} from './mod-task-popup/mod-task-popup.component';
 import {MatSortModule} from "@angular/material/sort";
-
+import {AppRoutingModule} from "./app-routing.module";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {MatSortModule} from "@angular/material/sort";
     ModTaskPopupComponent
   ],
   imports: [
+    AppRoutingModule,
     CommonModule,
     BrowserModule,
     HttpClientModule,
@@ -48,7 +50,8 @@ import {MatSortModule} from "@angular/material/sort";
     FlexLayoutModule,
     MatPaginatorModule,
     MatChipsModule,
-    MatSortModule
+    MatSortModule,
+    MatTooltipModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

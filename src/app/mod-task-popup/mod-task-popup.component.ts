@@ -95,10 +95,10 @@ export class ModTaskPopupComponent implements OnInit {
       this.codeList.push(this.fb.control(code));
     })
     data.prevDifficulty?.forEach(pd => {
-      this.prevDifficultyList.push(this.fb.control(pd));
+      this.prevDifficultyList.push(this.fb.control(pd.id));
     })
     data.nextDifficulty?.forEach(nd => {
-      this.nextDifficultyList.push(this.fb.control(nd));
+      this.nextDifficultyList.push(this.fb.control(nd.id));
     })
     data.competence?.forEach(c => {
       this.competenceList.push(this.fb.control(c));

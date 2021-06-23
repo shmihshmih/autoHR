@@ -40,7 +40,8 @@
       Код:
     </h2>
   </div>
-  <pre *ngFor="let code of data.task.answer.code" class="paragraph">
+  <pre *ngFor="let code of data.task.answer.code; let idx = index" class="paragraph">
+    <b>Код: {{idx}}</b>
     <code data-language="javascript">
       {{code}}
     </code>
@@ -61,6 +62,5 @@
 </div>
 
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary"  (click)="onNoClick(false)">Отмена</button>
-  <button mat-raised-button color="primary" cdkFocusInitial (click)="onNoClick(true)">Закрыть</button>
+  <button mat-raised-button color="primary" (click)="onNoClick()">Закрыть</button>
 </div>

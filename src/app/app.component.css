@@ -58,7 +58,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .detail-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
 }
 

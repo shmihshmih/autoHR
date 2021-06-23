@@ -10,6 +10,7 @@ import {FormControl} from "@angular/forms";
 import {ModTaskPopupComponent} from "./mod-task-popup/mod-task-popup.component";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(
     private api: ApiService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public activatedRoute: ActivatedRoute
   ) {
     this.api.getAllTasks().subscribe((tasks) => {
       this.tasks = tasks;
@@ -58,6 +60,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      if (params.task_id) {
+        this.openSolution(params.task_id);
+      }
+    })
     // получаем справочники
     this.api.getDifficulties().subscribe((difficulties) => {
       this.difficultiesList = difficulties;
@@ -111,30 +118,89 @@ export class AppComponent implements OnInit, AfterViewInit {
       data: {task}
     });
     dialogRef.afterClosed().subscribe(data => {
-      console.log('data: ', data);
     });
   }
 
+  // очищение таски пустышек, которые возникают на форме создания/редактировани
+  clearEmptyArrays(task: ITask): ITask {
+    let prevDifficulty: any[] = [];
+    let nextDifficulty: any[] = [];
+    let answerLink: any[] = [];
+    let answerCode: any[] = [];
+    task.prevDifficulty?.forEach(prev => {
+      if (prev) prevDifficulty.push(prev);
+    })
+    task.nextDifficulty?.forEach(next => {
+      if (next) nextDifficulty.push(next);
+    })
+    task.answer.link?.forEach(link => {
+      if (link) answerLink.push(link);
+    })
+    task.answer.code?.forEach(code => {
+      if (code) answerCode.push(code);
+    })
+    return {...task, prevDifficulty, nextDifficulty, answer: {...task.answer, link: answerLink, code: answerCode}};
+  }
+
   // попап редактирования таска
-  openModTaskPopup(task: ITask): void {
+  openModTaskPopup(task?: ITask): void {
     const dialogRef = this.dialog.open(ModTaskPopupComponent, {
       maxHeight: '90vh',
       width: '90%',
       data: {task}
     });
     dialogRef.afterClosed().subscribe(data => {
+      if (!data) {
+        return;
+      }
+
+      data = this.clearEmptyArrays(data);
+
+      // с формы приходят только ид, тут мы докидываем caption, чтобы потом просто отображать в таблице
+      let prevDifficulty = [];
+      let nextDifficulty = [];
+
+      if (data.prevDifficulty.length > 0) {
+        prevDifficulty = data.prevDifficulty.map((pr: string) => {
+          return this.tasks.filter(task => {
+            return +task.id === +pr
+          })[0];
+        }).map((task: ITask) => {
+          return {id: task.id, caption: task.question}
+        });
+      }
+
+      if (data.nextDifficulty.length > 0) {
+        nextDifficulty = data.nextDifficulty.map((pr: string) => {
+          return this.tasks.filter(task => {
+            return +task.id === +pr
+          })[0];
+        }).map((task: ITask) => {
+          return {id: task.id, caption: task.question}
+        });
+      }
+
       if (data.id) {
         // update
-        this.tasks[data.tableIndex - 1] = data;
+        this.tasks[data.tableIndex - 1] = {...data, prevDifficulty, nextDifficulty};
         let tableDataSrc = this.setTableIndex(0, this.tasks);
         this.dataSource = new MatTableDataSource(tableDataSrc);
       } else {
         // create
-        this.tasks.push(data);
+        this.tasks.push({...data, prevDifficulty, nextDifficulty});
         let tableDataSrc = this.setTableIndex(0, this.tasks);
         this.dataSource = new MatTableDataSource(tableDataSrc);
       }
     });
+  }
+
+  // открыть определенный ответ по id таска
+  openSolution(id: string): void {
+    this.step = 'catalog';
+    const task = this.tasks.filter(task => {
+      return task.id == id;
+    })[0];
+    this.openTaskAnswerPopup(task);
   }
 
   // обновляем данные в таблице в соответсвии с новым конфигом
@@ -276,7 +342,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   // проставляем индексы для таблицы
   setTableIndex(start: number, data: any[]): any[] {
     let indexedData = [];
-    for (let i = start, j = 0; j < data.length; i++, j++) { indexedData.push({...data[j], tableIndex: i + 1}) }
+    for (let i = start, j = 0; j < data.length; i++, j++) {
+      indexedData.push({...data[j], tableIndex: i + 1})
+    }
     return indexedData;
   }
 }

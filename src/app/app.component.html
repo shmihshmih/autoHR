@@ -72,12 +72,15 @@
 
       </div>
       <div class="filter-actions">
-        <button mat-mini-fab color="primary" (click)="refreshTable()"
+        <button mat-mini-fab color="primary" (click)="refreshTable()" matTooltip="Обновить таблицу в соответствии с фильтрами"
                 [disabled]="tasksCount < 1 || typeModel < 1 || !difficultiesControl.value || !competencesControl.value || !popularityControl.value">
           <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-mini-fab color="primary" (click)="goToStart('reset-filters')">
+        <button mat-mini-fab color="primary" (click)="goToStart('reset-filters')" matTooltip="Сбросить все фильтры">
           <mat-icon>highlight_off</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" matTooltip="Добавить новый вопрос" (click)="openModTaskPopup()">
+          <mat-icon>add</mat-icon>
         </button>
       </div>
       <div fxLayoutAlign="center" class="w-100">
@@ -152,7 +155,7 @@
                     <div> {{element.question}} </div>
                   </div>
                 </div>
-                <div [ngStyle]="{'margin-top': '16px'}" class="mb-24">
+                <div [ngStyle]="{'margin-top': '16px'}">
                   <h2 class="custom-h-margin">
                     Описание вопроса:
                   </h2>
@@ -162,13 +165,23 @@
                     </div>
                   </div>
                 </div>
-                <div class="detail-actions">
-                  <div>
-                    <button *ngIf="element.prevDifficulty" mat-raised-button color="primary"><< Предыдущий по
-                      сложности {{element.prevDifficulty}}</button>
-                    <button *ngIf="element.nextDifficulty" mat-raised-button color="primary">Следующий по сложности
-                      >>{{element.nextDifficulty}}</button>
+                <div *ngIf="element.prevDifficulty.length > 0" [ngStyle]="{'margin-top': '16px'}">
+                  <h2 class="custom-h-margin">
+                    Вопросы полегче
+                  </h2>
+                  <div *ngFor="let t of element.prevDifficulty">
+                    <a [routerLink]="['task', t.id]">{{t.caption}}</a>
                   </div>
+                </div>
+                <div *ngIf="element.nextDifficulty.length > 0" [ngStyle]="{'margin-top': '16px'}">
+                  <h2 class="custom-h-margin">
+                    Вопросы посложнее
+                  </h2>
+                  <div *ngFor="let t of element.nextDifficulty">
+                    <a [routerLink]="['task', t.id]">{{t.caption}}</a>
+                  </div>
+                </div>
+                <div class="detail-actions">
                   <button mat-raised-button color="primary" (click)="openTaskAnswerPopup(element)">Ответ</button>
                 </div>
               </div>
@@ -188,7 +201,7 @@
     </div>
   </div>
   <div *ngIf="(step === 'catalog') || (step === 'interview')" class="block-action">
-    <button mat-mini-fab color="accent" (click)="goToStart('close-block')">
+    <button mat-mini-fab color="accent" (click)="goToStart('close-block')" matTooltip="Вернуться на первую страницу">
       <mat-icon>close</mat-icon>
     </button>
   </div>

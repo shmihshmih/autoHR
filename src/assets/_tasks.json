@@ -4,12 +4,24 @@
     "question": "Объясните\n делегирование событий",
     "description": "Красивым русским языком обьясните это явление. Пожалуйста!",
     "prevDifficulty": [
-      "4",
-      "6"
+      {
+        "id": 1,
+        "caption": "Объясните\n делегирование событий"
+      },
+      {
+        "id": 3,
+        "caption": "Объясните,\n как this работает в JavaScript"
+      }
     ],
     "nextDifficulty": [
-      "7",
-      "8"
+      {
+        "id": 1,
+        "caption": "Объясните\n делегирование событий"
+      },
+      {
+        "id": 3,
+        "caption": "Объясните,\n как this работает в JavaScript"
+      }
     ],
     "answer": {
       "link": [
@@ -21,9 +33,9 @@
         "Еще многого много текста ответ"
       ],
       "code": [
-        "  applyFilter(event: Event) {\n    const filterValue = (event.target as HTMLInputElement).value;\n    this.dataSource.filter = filterValue.trim().toLowerCase();\n  }",
-        "  ngAfterViewInit() {\n    this.dataSource.sort = this.sort;\n  }",
-        "  // фильтруем таски как надо и выставляем в таблицу\n  setTableData(config: ISobesConfigModel): void {\n    let newDataSource: ITask[] = [];\n\n    let matchedQuestions: ITask[] = [];\n    let matchedExercises: ITask[] = [];\n    let unmatchedQuestions: ITask[] = [];\n    let unmatchedExercises: ITask[] = [];\n\n    let questionNumber = Math.round(config.count * config.type / 100);\n    let exerciseNumber = config.count - questionNumber;\n\n    this.tasks.forEach((task: ITask) => {\n      let taskChecker = (task: ITask, config: ISobesConfigModel) => {\n        return task.competence.every(v => config.competence.includes(v));\n      };\n      if (config.difficulty.includes(task.difficulty) && config.popularity.includes(task.popularity) && taskChecker(task, config)) {\n        if (task.type === 'question') {\n          matchedQuestions.push(task)\n        }\n        if (task.type === 'exercise') {\n          matchedExercises.push(task)\n        }\n      } else {\n        if (task.type === 'question') {\n          unmatchedQuestions.push(task)\n        } else if (task.type === 'exercise') {\n          unmatchedExercises.push(task)\n        } else {\n          unmatchedQuestions.push(task);\n        }\n      }\n    });\n\n    let matchedQuestionsRandom = [];\n    for (let i = 0; i < matchedQuestions.length; i++) {\n      let it = this.randomizer(matchedQuestions);\n      matchedQuestionsRandom.push(it);\n    }\n\n    let matchedExercisesRandom = [];\n    for (let i = 0; i < matchedExercises.length; i++) {\n      let it = this.randomizer(matchedExercises);\n      matchedExercisesRandom.push(it);\n    }\n\n    let unmatchedQuestionsRandom = [];\n    for (let i = 0; i < unmatchedQuestions.length; i++) {\n      let it = this.randomizer(unmatchedQuestions);\n      unmatchedQuestionsRandom.push(it);\n    }\n\n    let unmatchedExercisesRandom = [];\n    for (let i = 0; i < unmatchedExercises.length; i++) {\n      let it = this.randomizer(unmatchedExercises);\n      unmatchedExercisesRandom.push(it);\n    }\n\n    let questions: ITask[] = matchedQuestionsRandom.concat(unmatchedQuestionsRandom);\n    let exercises: ITask[] = matchedExercisesRandom.concat(unmatchedExercisesRandom);\n\n    newDataSource.push(...questions.slice(0, questionNumber));\n    newDataSource.push(...exercises.slice(0, exerciseNumber));\n\n    if (questionNumber > questions.length) {\n      newDataSource.push(...exercises.slice(exerciseNumber, exerciseNumber + questionNumber - questions.length));\n    }\n\n    if (exerciseNumber > exercises.length) {\n      newDataSource.push(...questions.slice(questionNumber, questionNumber + exerciseNumber - exercises.length));\n    }\n    newDataSource = this.setTableIndex(0, newDataSource);\n    this.dataSource = new MatTableDataSource(newDataSource);\n  }"
+        " applyFilter(event: Event) {\n const filterValue = (event.target as HTMLInputElement).value;\n this.dataSource.filter = filterValue.trim().toLowerCase();\n }",
+        " ngAfterViewInit() {\n this.dataSource.sort = this.sort;\n }",
+        " // фильтруем таски как надо и выставляем в таблицу\n setTableData(config: ISobesConfigModel): void {\n let newDataSource: ITask[] = [];\n\n let matchedQuestions: ITask[] = [];\n let matchedExercises: ITask[] = [];\n let unmatchedQuestions: ITask[] = [];\n let unmatchedExercises: ITask[] = [];\n\n let questionNumber = Math.round(config.count * config.type / 100);\n let exerciseNumber = config.count - questionNumber;\n\n this.tasks.forEach((task: ITask) => {\n let taskChecker = (task: ITask, config: ISobesConfigModel) => {\n return task.competence.every(v => config.competence.includes(v));\n };\n if (config.difficulty.includes(task.difficulty) && config.popularity.includes(task.popularity) && taskChecker(task, config)) {\n if (task.type === 'question') {\n matchedQuestions.push(task)\n }\n if (task.type === 'exercise') {\n matchedExercises.push(task)\n }\n } else {\n if (task.type === 'question') {\n unmatchedQuestions.push(task)\n } else if (task.type === 'exercise') {\n unmatchedExercises.push(task)\n } else {\n unmatchedQuestions.push(task);\n }\n }\n });\n\n let matchedQuestionsRandom = [];\n for (let i = 0; i < matchedQuestions.length; i++) {\n let it = this.randomizer(matchedQuestions);\n matchedQuestionsRandom.push(it);\n }\n\n let matchedExercisesRandom = [];\n for (let i = 0; i < matchedExercises.length; i++) {\n let it = this.randomizer(matchedExercises);\n matchedExercisesRandom.push(it);\n }\n\n let unmatchedQuestionsRandom = [];\n for (let i = 0; i < unmatchedQuestions.length; i++) {\n let it = this.randomizer(unmatchedQuestions);\n unmatchedQuestionsRandom.push(it);\n }\n\n let unmatchedExercisesRandom = [];\n for (let i = 0; i < unmatchedExercises.length; i++) {\n let it = this.randomizer(unmatchedExercises);\n unmatchedExercisesRandom.push(it);\n }\n\n let questions: ITask[] = matchedQuestionsRandom.concat(unmatchedQuestionsRandom);\n let exercises: ITask[] = matchedExercisesRandom.concat(unmatchedExercisesRandom);\n\n newDataSource.push(...questions.slice(0, questionNumber));\n newDataSource.push(...exercises.slice(0, exerciseNumber));\n\n if (questionNumber > questions.length) {\n newDataSource.push(...exercises.slice(exerciseNumber, exerciseNumber + questionNumber - questions.length));\n }\n\n if (exerciseNumber > exercises.length) {\n newDataSource.push(...questions.slice(questionNumber, questionNumber + exerciseNumber - exercises.length));\n }\n newDataSource = this.setTableIndex(0, newDataSource);\n this.dataSource = new MatTableDataSource(newDataSource);\n }"
       ]
     },
     "type": "question",
